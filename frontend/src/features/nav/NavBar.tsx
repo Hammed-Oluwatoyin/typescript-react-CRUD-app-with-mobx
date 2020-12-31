@@ -1,31 +1,30 @@
-import React from 'react'
-import { Menu , Container, Button} from 'semantic-ui-react'
+import { observer } from 'mobx-react-lite';
+import React, { useContext } from 'react'
+import { Menu, Container, Button } from 'semantic-ui-react'
+import ActivityStore from '../../app/stores/activityStore';
 
+const NavBar: React.FC = () => {
+  const activityStore = useContext(ActivityStore);
 
-interface IProps {
-  handleOpenCreateForm : () => void;
-}
-const NavBar: React.FC<IProps> = ({handleOpenCreateForm}) => {
-    return (
-        
-         <Menu fixed="top" inverted={true} >
-           <Container >
-           <Menu.Item header>
-             <img src="/assets/logo.png" alt="logo"  style={{marginRight: "10px"}}/>
+  return (
+    <Menu fixed="top" inverted={true} >
+      <Container >
+        <Menu.Item header>
+          <img src="/assets/logo.png" alt="logo" style={{ marginRight: "10px" }} />
             Reactivities
-            </Menu.Item> 
-            <Menu.Item  name="Activities"/>
-
-            <Menu.Item> 
-              <Button  onClick = {() => {handleOpenCreateForm()}} positive content="create Activity" />
             </Menu.Item>
-             
-      
-           </Container>
-        
-      </Menu>
-        
-    )
+        <Menu.Item name="Activities" />
+
+        <Menu.Item>
+          <Button onClick={() => { activityStore.openCreateForm() }} positive content="create Activity" />
+        </Menu.Item>
+
+
+      </Container>
+
+    </Menu>
+
+  )
 }
 
-export default NavBar;
+export default observer(NavBar);
